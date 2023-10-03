@@ -1,0 +1,36 @@
+name: Update installer
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download nodemanager agent
+        run: |
+            wget -O nodemanager-agent.zip https://nodemanager.nyc3.digitaloceanspaces.com/nodemanager-agent/nodemanager-agent.zip
+
+      - name: Unzip nodemanager agent
+        run: |
+          rm -rf nodemanager-agent
+          unzip nodemanager-agent.zip
+          rm -rf nodemanager-agent.zip
+          mv ./nodemanager-agent/docker-compose.yml docker-compose.yml
+          mv ./nodemanager-agent/package.json package.json
+          mv ./nodemanager-agent/yarn.lock yarn.lock
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "shivamanupadi"
+          git config user.email "shivaprasadmanupadi@gmail.com"
+          git add .
+          git commit -m "Update installer"
+          git push origin HEAD:master
+
