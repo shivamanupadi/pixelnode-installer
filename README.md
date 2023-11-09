@@ -1,3 +1,3 @@
 ```
-sudo curl -L http://install-nodemanager.dappflow.org | bash
+sudo curl -L http://get.pixelnode.org | bash
 ```
