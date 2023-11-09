@@ -136,8 +136,8 @@ function install_nodejs_if_not_installed() {
 
 # Function to clone Git repository, only if it's not cloned before
 function clone_git_repo_if_not_cloned() {
-    local repo_url="https://github.com/shivamanupadi/nodemanager-installer"
-    local repo_dir="nodemanager-installer"
+    local repo_url="https://github.com/shivamanupadi/pixelnode-installer"
+    local repo_dir="pixelnode-installer"
     if [ -d "$repo_dir" ]; then
         echo "Repository is already cloned. Skipping..."
     else
@@ -167,7 +167,7 @@ npm_install_if_not_installed yarn
 
 # Clone the repository if not already cloned and run the commands
 clone_git_repo_if_not_cloned
-cd nodemanager-installer
+cd pixelnode-installer
 git reset --hard origin/master
 git pull
 yarn install
