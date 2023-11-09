@@ -1,6 +1,6 @@
 module.exports = {
     apps : [{
-        name: "node-manager",
-        script: "nodemanager-agent/main.js"
+        name: "pixelnode",
+        script: "pixelnode-agent/main.js"
     }]
 };

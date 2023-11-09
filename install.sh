@@ -6,7 +6,7 @@ set -euo pipefail
 function setup_needrestart_config() {
     export DEBIAN_FRONTEND=noninteractive
     needrestart_conf_dir="/etc/needrestart/conf.d"
-    needrestart_conf_file="${needrestart_conf_dir}/temp-disable-for-node-manager-install.conf"
+    needrestart_conf_file="${needrestart_conf_dir}/temp-disable-for-pixelnode-install.conf"
     sudo mkdir -p "${needrestart_conf_dir}"
     echo "# Restart services (l)ist only, (i)nteractive or (a)utomatically.
     \$nrconf{restart} = 'l';

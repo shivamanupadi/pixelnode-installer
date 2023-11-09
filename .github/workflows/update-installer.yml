@@ -13,18 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download nodemanager agent
+      - name: Download pixelnode agent
         run: |
-            wget -O nodemanager-agent.zip https://nodemanager.nyc3.digitaloceanspaces.com/nodemanager-agent/nodemanager-agent.zip
+            wget -O pixelnode-agent.zip https://pixelnode.nyc3.digitaloceanspaces.com/pixelnode-agent/pixelnode-agent.zip
 
-      - name: Unzip nodemanager agent
+      - name: Unzip pixelnode agent
         run: |
-          rm -rf nodemanager-agent
-          unzip nodemanager-agent.zip
-          rm -rf nodemanager-agent.zip
-          mv ./nodemanager-agent/docker-compose.yml docker-compose.yml
-          mv ./nodemanager-agent/package.json package.json
-          mv ./nodemanager-agent/yarn.lock yarn.lock
+          rm -rf pixelnode-agent
+          unzip pixelnode-agent.zip
+          rm -rf pixelnode-agent.zip
+          mv ./pixelnode-agent/docker-compose.yml docker-compose.yml
+          mv ./pixelnode-agent/package.json package.json
+          mv ./pixelnode-agent/yarn.lock yarn.lock
 
       - name: Commit and push changes
         run: |
