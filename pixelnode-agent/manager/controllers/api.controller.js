@@ -216,6 +216,18 @@ let ApiController = class ApiController {
         }
         catch (e) { }
     }
+    async updateNode() {
+        try {
+            const command = `docker-compose pull && docker-compose down && docker-compose up -d`;
+            const update = shelljs_1.default.exec(command).code;
+            return {
+                update: update !== 0,
+            };
+        }
+        catch (e) {
+            throw new common_1.HttpException("unable to update the node", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 };
 exports.ApiController = ApiController;
 __decorate([
@@ -303,6 +315,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ApiController.prototype, "nodeStats", null);
+__decorate([
+    (0, common_1.Post)("update-node"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ApiController.prototype, "updateNode", null);
 exports.ApiController = ApiController = __decorate([
     (0, common_1.Controller)("api"),
     __metadata("design:paramtypes", [auth_service_1.AuthService,

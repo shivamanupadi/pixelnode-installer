@@ -1,4 +1,4 @@
-import { AlgodParams, NodeStatus, OsParams, PrerequisitesParams, StartParams, StopParams } from "../models/types";
+import { AlgodParams, NodeStatus, OsParams, PrerequisitesParams, StartParams, StopParams, UpdateNodeParams } from "../models/types";
 import { Request } from "express";
 import { AuthService } from "../../auth/services/auth.service";
 import { NodeService } from "../services/node.service";
@@ -21,4 +21,5 @@ export declare class ApiController {
     status(req: Request): Promise<NodeStatus>;
     setup(): Promise<any>;
     nodeStats(): Promise<DockerContainerStatsData>;
+    updateNode(): Promise<UpdateNodeParams>;
 }

@@ -20,6 +20,9 @@ export interface StartParams {
 export interface StopParams {
     stop: boolean;
 }
+export interface UpdateNodeParams {
+    update: boolean;
+}
 export interface AlgodParams {
     algod: {
         url: string;
