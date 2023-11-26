@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  algod:
+    container_name: blockchain-node
+    image: scholtz2/algorand-participation-voitest-extended:3.19.0-stable
+    ports:
+      - 4190:28081
+    environment:
+      - NETWORK=voitest
+      - FAST_CATCHUP=1
+      - PROFILE=participation
+    volumes:
+      - ${PWD}/data:/app/data/:rw
+      - ${PWD}/config.json:/etc/algorand/config.json:rw
+networks:
+  host:
+    external: true

@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import { Users } from "../../auth/entities/users.entity";
+import { Users } from "../entities/users.entity";
 export declare class UsersStorageService {
     private usersRepository;
     constructor(usersRepository: Repository<Users>);

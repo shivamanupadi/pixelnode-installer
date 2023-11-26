@@ -16,6 +16,7 @@ const keys_storage_service_1 = require("../storage/services/keys.storage.service
 const crypto_1 = require("crypto");
 const auth_gaurd_1 = require("./services/auth.gaurd");
 const core_1 = require("@nestjs/core");
+const constants_1 = require("../constants");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -34,7 +35,7 @@ exports.AuthModule = AuthModule = __decorate([
                     }
                     else {
                         jwtSecret = (0, crypto_1.randomBytes)(64).toString("hex");
-                        await keysStorageService.save("jwt_secret", jwtSecret);
+                        await keysStorageService.save(constants_1.KEYS_STORAGE.JWT_SECRET, jwtSecret);
                     }
                     return {
                         secret: jwtSecret,

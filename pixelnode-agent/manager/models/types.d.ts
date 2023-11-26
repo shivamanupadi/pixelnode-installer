@@ -12,13 +12,19 @@ export interface OsParams {
 export interface PrerequisitesParams {
     docker: boolean;
     node: boolean;
-    path: string;
+    variant?: NodeVariant;
 }
 export interface StartParams {
     start: boolean;
 }
+export interface InstallParams {
+    installed: boolean;
+}
 export interface StopParams {
     stop: boolean;
+}
+export interface UpdatePortalParams {
+    update: boolean;
 }
 export interface UpdateNodeParams {
     update: boolean;
@@ -55,8 +61,16 @@ export interface NodeStatus {
         health: boolean;
     };
     node: {
+        installed: boolean;
         health: boolean;
         caughtup: boolean;
         status?: StatusParams;
+        variant: NodeVariant;
     };
+}
+export interface NodeVariant {
+    id: string;
+    name: string;
+    dockerComposeFile: string;
+    catchup: string;
 }

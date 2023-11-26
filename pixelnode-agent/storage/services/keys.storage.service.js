@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeysStorageService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
-const keys_entity_1 = require("../../auth/entities/keys.entity");
+const keys_entity_1 = require("../entities/keys.entity");
 const typeorm_2 = require("@nestjs/typeorm");
 let KeysStorageService = class KeysStorageService {
     constructor(keysRepository) {
@@ -24,10 +24,8 @@ let KeysStorageService = class KeysStorageService {
     async find(key) {
         return await this.keysRepository.findOne({ where: { key } });
     }
-    async createMany(rows) {
-        return await this.keysRepository.save(rows.map((row) => {
-            return this.keysRepository.create(row);
-        }));
+    async delete(key) {
+        return await this.keysRepository.delete({ key: key });
     }
     async save(key, value) {
         return await this.keysRepository.save({ key, value });

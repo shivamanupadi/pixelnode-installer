@@ -14,12 +14,12 @@ const common_1 = require("@nestjs/common");
 const manager_module_1 = require("./manager/manager.module");
 const auth_module_1 = require("./auth/auth.module");
 const typeorm_1 = require("@nestjs/typeorm");
-const keys_entity_1 = require("./auth/entities/keys.entity");
+const keys_entity_1 = require("./storage/entities/keys.entity");
 const storage_module_1 = require("./storage/storage.module");
 const cache_manager_1 = require("@nestjs/cache-manager");
 const path_1 = __importDefault(require("path"));
 const serve_static_1 = require("@nestjs/serve-static");
-const users_entity_1 = require("./auth/entities/users.entity");
+const users_entity_1 = require("./storage/entities/users.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
