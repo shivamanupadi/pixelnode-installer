@@ -173,6 +173,7 @@ git pull
 yarn install
 PORT=8000 pm2 start ecosystem.config.js
 
-docker-compose up -d
+docker-compose -f docker-compose.algorand.mainnet.yml pull
+
 echo -e "\033[32mPixelNode installed successfully. Running on PORT 8000. Open your server in the browser on the port 8000\033[0m"
 

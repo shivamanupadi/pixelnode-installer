@@ -22,7 +22,10 @@ jobs:
           rm -rf pixelnode-agent
           unzip pixelnode-agent.zip
           rm -rf pixelnode-agent.zip
-          mv ./pixelnode-agent/docker-compose.yml docker-compose.yml
+          mv ./pixelnode-agent/docker-compose.algorand.mainnet.yml docker-compose.algorand.mainnet.yml
+          mv ./pixelnode-agent/docker-compose.algorand.testnet.yml docker-compose.algorand.testnet.yml
+          mv ./pixelnode-agent/docker-compose.algorand.betanet.yml docker-compose.algorand.betanet.yml
+          mv ./pixelnode-agent/docker-compose.voi.testnet.yml docker-compose.voi.testnet.yml
           mv ./pixelnode-agent/package.json package.json
           mv ./pixelnode-agent/yarn.lock yarn.lock
 
