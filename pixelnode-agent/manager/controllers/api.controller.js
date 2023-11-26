@@ -163,18 +163,6 @@ let ApiController = class ApiController {
             throw new common_1.HttpException("unable to stop the node", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async updatePortal() {
-        try {
-            const command = `pm2 delete pixelnode && git reset --hard origin/master && git pull && yarn install && PORT=8000 pm2 start ecosystem.config.js`;
-            const update = shelljs_1.default.exec(command).code;
-            return {
-                update: update !== 0,
-            };
-        }
-        catch (e) {
-            throw new common_1.HttpException("unable to update the portal", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
     async participationKeys(body) {
         try {
             const { address, firstRound, lastRound } = body;
@@ -351,14 +339,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ApiController.prototype, "stop", null);
-__decorate([
-    (0, common_1.Post)("update-portal"),
-    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
-    (0, exports.Scopes)("api"),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], ApiController.prototype, "updatePortal", null);
 __decorate([
     (0, common_1.Post)("participation-keys"),
     (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),

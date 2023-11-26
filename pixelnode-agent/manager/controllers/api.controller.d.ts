@@ -1,4 +1,4 @@
-import { AlgodParams, InstallParams, NodeStatus, NodeVariant, OsParams, PrerequisitesParams, StartParams, StopParams, UpdateNodeParams, UpdatePortalParams } from "../models/types";
+import { AlgodParams, InstallParams, NodeStatus, NodeVariant, OsParams, PrerequisitesParams, StartParams, StopParams, UpdateNodeParams } from "../models/types";
 import { Request } from "express";
 import { AuthService } from "../../auth/services/auth.service";
 import { NodeService } from "../services/node.service";
@@ -23,7 +23,6 @@ export declare class ApiController {
     start(): Promise<StartParams>;
     catchup(): Promise<void>;
     stop(): Promise<StopParams>;
-    updatePortal(): Promise<UpdatePortalParams>;
     participationKeys(body: any): Promise<string>;
     getNodeVariants(): NodeVariant[];
     algod(req: Request): Promise<AlgodParams>;
