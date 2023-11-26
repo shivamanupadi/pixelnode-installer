@@ -165,7 +165,7 @@ let ApiController = class ApiController {
     }
     async updatePortal() {
         try {
-            const command = `sh update.sh`;
+            const command = `pm2 delete pixelnode && git reset --hard origin/master && git pull && yarn install && PORT=8000 pm2 start ecosystem.config.js`;
             const update = shelljs_1.default.exec(command).code;
             return {
                 update: update !== 0,
