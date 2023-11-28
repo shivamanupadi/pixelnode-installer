@@ -1,4 +1,4 @@
-import { AlgodParams, InstallParams, NodeStatus, NodeVariant, OsParams, PrerequisitesParams, StartParams, StopParams, UpdateNodeParams } from "../models/types";
+import { AlgodParams, InstallParams, NodeStatus, NodeVariant, OsParams, PrerequisitesParams, RestartPortalParams, StartParams, StopParams, UpdateNodeParams, UpdatePortalParams } from "../models/types";
 import { Request } from "express";
 import { AuthService } from "../../auth/services/auth.service";
 import { NodeService } from "../services/node.service";
@@ -31,4 +31,7 @@ export declare class ApiController {
     nodeStats(): Promise<DockerContainerStatsData>;
     reset(): Promise<boolean>;
     updateNode(): Promise<UpdateNodeParams>;
+    updatePortal(): Promise<UpdatePortalParams>;
+    restartPortal(): Promise<RestartPortalParams>;
+    execCommand(command: string): Promise<unknown>;
 }

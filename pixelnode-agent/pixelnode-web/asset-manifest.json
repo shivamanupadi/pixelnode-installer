@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.a04ccb7a.css",
-    "main.js": "/static/js/main.566cbd66.js",
+    "main.css": "/static/css/main.aa949600.css",
+    "main.js": "/static/js/main.0f83a7ca.js",
     "static/media/catchup.gif": "/static/media/catchup.e17b78ed66b850a2ce7d.gif",
     "static/media/Poppins-Thin.ttf": "/static/media/Poppins-Thin.a61eaf4c2e4d44d6db6a.ttf",
     "static/media/Poppins-Light.ttf": "/static/media/Poppins-Light.f41b63c0bb0963ace821.ttf",
     "static/media/Poppins-Regular.ttf": "/static/media/Poppins-Regular.8081832fc5cfbf634aa6.ttf",
     "static/media/Poppins-Bold.ttf": "/static/media/Poppins-Bold.404e299be26d78e66794.ttf",
+    "static/media/voi-logo.png": "/static/media/voi-logo.d025513c3edcf385af10.png",
     "static/media/algo-logo.png": "/static/media/algo-logo.733793272aeaf0eb2200.png",
     "static/media/logo.png": "/static/media/logo.70691561f3bcce029563.png",
     "static/media/block.png": "/static/media/block.fd22b69d7e66854a6707.png",
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.a04ccb7a.css",
-    "static/js/main.566cbd66.js"
+    "static/css/main.aa949600.css",
+    "static/js/main.0f83a7ca.js"
   ]
 }

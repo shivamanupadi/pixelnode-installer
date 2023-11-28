@@ -26,6 +26,9 @@ export interface StopParams {
 export interface UpdatePortalParams {
     update: boolean;
 }
+export interface RestartPortalParams {
+    restart: boolean;
+}
 export interface UpdateNodeParams {
     update: boolean;
 }

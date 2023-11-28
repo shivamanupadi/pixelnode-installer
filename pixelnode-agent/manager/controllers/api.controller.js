@@ -31,6 +31,7 @@ const dockerstats_1 = require("dockerstats");
 const algosdk_1 = require("algosdk");
 const keys_storage_service_1 = require("../../storage/services/keys.storage.service");
 const users_storage_service_1 = require("../../storage/services/users.storage.service");
+const child_process_1 = __importDefault(require("child_process"));
 const Scopes = (...scopes) => (0, common_1.SetMetadata)("scopes", scopes);
 exports.Scopes = Scopes;
 let ApiController = class ApiController {
@@ -282,6 +283,42 @@ let ApiController = class ApiController {
             throw new common_1.HttpException("unable to update the node", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async updatePortal() {
+        try {
+            const scriptPath = path_1.default.resolve("update.sh");
+            await this.execCommand(`sh ${scriptPath}`);
+            return {
+                update: true,
+            };
+        }
+        catch (e) {
+            throw new common_1.HttpException("unable to update the portal", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async restartPortal() {
+        try {
+            const scriptPath = path_1.default.resolve("restart.sh");
+            await this.execCommand(`sh ${scriptPath}`);
+            return {
+                restart: true,
+            };
+        }
+        catch (e) {
+            throw new common_1.HttpException("unable to restart the portal", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async execCommand(command) {
+        return new Promise((resolve, reject) => {
+            child_process_1.default.exec(command, (error, stdout, stderr) => {
+                if (error) {
+                    reject(stderr);
+                }
+                else {
+                    resolve(stdout);
+                }
+            });
+        });
+    }
 };
 exports.ApiController = ApiController;
 __decorate([
@@ -402,6 +439,22 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ApiController.prototype, "updateNode", null);
+__decorate([
+    (0, common_1.Post)("update-portal"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ApiController.prototype, "updatePortal", null);
+__decorate([
+    (0, common_1.Post)("restart-portal"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ApiController.prototype, "restartPortal", null);
 exports.ApiController = ApiController = __decorate([
     (0, common_1.Controller)("api"),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
