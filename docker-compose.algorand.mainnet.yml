@@ -2,7 +2,7 @@ version: '3'
 
 services:
   algod:
-    container_name: blockchain-node
+    container_name: algorand-mainnet
     image: algorand/algod:latest
     ports:
       - 4190:8080

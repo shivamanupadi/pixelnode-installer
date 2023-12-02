@@ -5,7 +5,8 @@ export declare class NodeService {
     private keysStorageService;
     constructor(keysStorageService: KeysStorageService);
     isValidNodeVariant(id: string): boolean;
-    getInstalledNodeVariant(): Promise<string>;
+    getInstalledNodeVariantId(): Promise<string>;
+    getInstalledNodeVariant(): Promise<NodeVariant>;
     setNodeVariant(nodeVariant: string): Promise<Keys>;
     isInstalled(): Promise<boolean>;
     getNodeDockerComposeFile(): Promise<string>;

@@ -76,4 +76,5 @@ export interface NodeVariant {
     name: string;
     dockerComposeFile: string;
     catchup: string;
+    containerId: string;
 }

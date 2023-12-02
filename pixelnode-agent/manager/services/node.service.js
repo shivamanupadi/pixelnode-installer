@@ -25,19 +25,23 @@ let NodeService = class NodeService {
         const nodeVariant = this.getNodeVariant(id);
         return Boolean(nodeVariant);
     }
-    async getInstalledNodeVariant() {
+    async getInstalledNodeVariantId() {
         const nodeVariantRecord = await this.keysStorageService.find(constants_1.KEYS_STORAGE.NODE_VARIANT);
         return nodeVariantRecord?.value;
+    }
+    async getInstalledNodeVariant() {
+        const id = await this.getInstalledNodeVariantId();
+        return this.getNodeVariant(id);
     }
     async setNodeVariant(nodeVariant) {
         return await this.keysStorageService.save(constants_1.KEYS_STORAGE.NODE_VARIANT, nodeVariant);
     }
     async isInstalled() {
-        const nodeVariant = await this.getInstalledNodeVariant();
+        const nodeVariant = await this.getInstalledNodeVariantId();
         return Boolean(nodeVariant);
     }
     async getNodeDockerComposeFile() {
-        const nodeVariant = await this.getInstalledNodeVariant();
+        const nodeVariant = await this.getInstalledNodeVariantId();
         return this.getDockerComposeFileByNodeVariant(nodeVariant);
     }
     getDockerComposeFileByNodeVariant(id) {
@@ -45,7 +49,7 @@ let NodeService = class NodeService {
         return nodeVariant.dockerComposeFile;
     }
     async getCatchPointUrl() {
-        const nodeVariantId = await this.getInstalledNodeVariant();
+        const nodeVariantId = await this.getInstalledNodeVariantId();
         const nodeVariant = this.getNodeVariant(nodeVariantId);
         return nodeVariant.catchup;
     }
@@ -55,18 +59,21 @@ let NodeService = class NodeService {
                 id: "algorand_mainnet",
                 name: "Algorand mainnet",
                 dockerComposeFile: "docker-compose.algorand.mainnet.yml",
+                containerId: "algorand-mainnet",
                 catchup: "https://algorand-catchpoints.s3.us-east-2.amazonaws.com/channel/mainnet/latest.catchpoint",
             },
             {
                 id: "algorand_testnet",
                 name: "Algorand testnet",
                 dockerComposeFile: "docker-compose.algorand.testnet.yml",
+                containerId: "algorand-testnet",
                 catchup: "https://algorand-catchpoints.s3.us-east-2.amazonaws.com/channel/testnet/latest.catchpoint",
             },
             {
                 id: "algorand_betanet",
                 name: "Algorand betanet",
                 dockerComposeFile: "docker-compose.algorand.betanet.yml",
+                containerId: "algorand-betanet",
                 catchup: "https://algorand-catchpoints.s3.us-east-2.amazonaws.com/channel/betanet/latest.catchpoint",
             },
         ];
@@ -82,7 +89,7 @@ let NodeService = class NodeService {
         const { data } = await axios_1.default.get(url);
         let catchpoint;
         if (data) {
-            const nodeVariantId = await this.getInstalledNodeVariant();
+            const nodeVariantId = await this.getInstalledNodeVariantId();
             if (nodeVariantId === "voi_testnet") {
                 catchpoint = data["last-catchpoint"];
             }

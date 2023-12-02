@@ -84,10 +84,9 @@ let ApiController = class ApiController {
     }
     async prerequisites() {
         try {
-            const docker = await shelljs_1.default.which("docker");
+            const docker = shelljs_1.default.which("docker");
             const genesis = await this.nodeService.isInstalled();
-            const variantId = await this.nodeService.getInstalledNodeVariant();
-            const variant = this.nodeService.getNodeVariant(variantId);
+            const variant = await this.nodeService.getInstalledNodeVariant();
             return {
                 docker: !(0, is_empty_1.default)(docker),
                 node: genesis,
@@ -145,7 +144,8 @@ let ApiController = class ApiController {
     async catchup() {
         try {
             const catchpoint = await this.nodeService.getCatchPoint();
-            const command = `docker exec ${constants_1.NODE_CONTAINER} goal node catchup ${catchpoint}`;
+            const variant = await this.nodeService.getInstalledNodeVariant();
+            const command = `docker exec ${variant.containerId} goal node catchup ${catchpoint}`;
             shelljs_1.default.exec(command);
         }
         catch (e) {
@@ -154,7 +154,8 @@ let ApiController = class ApiController {
     }
     async stop() {
         try {
-            const command = `docker exec ${constants_1.NODE_CONTAINER} goal node stop && docker rm -f ${constants_1.NODE_CONTAINER}`;
+            const variant = await this.nodeService.getInstalledNodeVariant();
+            const command = `docker rm -f ${variant.containerId}`;
             const stop = shelljs_1.default.exec(command).code;
             return {
                 stop: stop !== 0,
@@ -166,8 +167,9 @@ let ApiController = class ApiController {
     }
     async participationKeys(body) {
         try {
+            const variant = await this.nodeService.getInstalledNodeVariant();
             const { address, firstRound, lastRound } = body;
-            return shelljs_1.default.exec(`docker exec ${constants_1.NODE_CONTAINER} goal account addpartkey -a ${address} --roundFirstValid=${firstRound} --roundLastValid=${lastRound}`);
+            return shelljs_1.default.exec(`docker exec ${variant.containerId} goal account addpartkey -a ${address} --roundFirstValid=${firstRound} --roundLastValid=${lastRound}`);
         }
         catch (e) {
             throw new common_1.HttpException("unable to generate the participation key", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
@@ -228,8 +230,7 @@ let ApiController = class ApiController {
                 }
                 catch (e) { }
             }
-            const variantId = await this.nodeService.getInstalledNodeVariant();
-            nodeVariant = this.nodeService.getNodeVariant(variantId);
+            nodeVariant = await this.nodeService.getInstalledNodeVariant();
         }
         return {
             agent: {
@@ -256,7 +257,8 @@ let ApiController = class ApiController {
     }
     async nodeStats() {
         try {
-            const data = await (0, dockerstats_1.dockerContainerStats)(constants_1.NODE_CONTAINER);
+            const variant = await this.nodeService.getInstalledNodeVariant();
+            const data = await (0, dockerstats_1.dockerContainerStats)(variant.containerId);
             if (data && data.length > 0) {
                 return data[0];
             }
@@ -264,7 +266,13 @@ let ApiController = class ApiController {
         catch (e) { }
     }
     async reset() {
-        await this.stop();
+        const isInstalled = await this.nodeService.isInstalled();
+        if (isInstalled) {
+            try {
+                await this.stop();
+            }
+            catch (e) { }
+        }
         const dataPath = path_1.default.resolve("./data");
         const deleteCommand = `rm -r ${dataPath}`;
         shelljs_1.default.exec(deleteCommand);

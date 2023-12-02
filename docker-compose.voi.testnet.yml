@@ -2,7 +2,7 @@ version: '3'
 
 services:
   algod:
-    container_name: blockchain-node
+    container_name: voi-testnet
     image: scholtz2/algorand-participation-voitest-extended:3.19.0-stable
     ports:
       - 4190:28081
