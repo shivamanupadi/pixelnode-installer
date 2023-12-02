@@ -154,7 +154,7 @@ let ApiController = class ApiController {
     }
     async stop() {
         try {
-            const command = `docker exec ${constants_1.NODE_CONTAINER} goal node stop`;
+            const command = `docker exec ${constants_1.NODE_CONTAINER} goal node stop && docker rm -f ${constants_1.NODE_CONTAINER}`;
             const stop = shelljs_1.default.exec(command).code;
             return {
                 stop: stop !== 0,
