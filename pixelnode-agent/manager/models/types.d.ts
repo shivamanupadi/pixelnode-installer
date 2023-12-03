@@ -14,24 +14,6 @@ export interface PrerequisitesParams {
     node: boolean;
     variant?: NodeVariant;
 }
-export interface StartParams {
-    start: boolean;
-}
-export interface InstallParams {
-    installed: boolean;
-}
-export interface StopParams {
-    stop: boolean;
-}
-export interface UpdatePortalParams {
-    update: boolean;
-}
-export interface RestartPortalParams {
-    restart: boolean;
-}
-export interface UpdateNodeParams {
-    update: boolean;
-}
 export interface AlgodParams {
     algod: {
         url: string;

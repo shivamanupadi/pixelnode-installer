@@ -13,13 +13,15 @@ const storage_module_1 = require("../storage/storage.module");
 const auth_module_1 = require("../auth/auth.module");
 const jwt_1 = require("@nestjs/jwt");
 const node_service_1 = require("./services/node.service");
+const node_controller_1 = require("./controllers/node.controller");
+const portal_controller_1 = require("./controllers/portal.controller");
 let ManagerModule = class ManagerModule {
 };
 exports.ManagerModule = ManagerModule;
 exports.ManagerModule = ManagerModule = __decorate([
     (0, common_1.Module)({
         imports: [storage_module_1.StorageModule, auth_module_1.AuthModule, jwt_1.JwtModule],
-        controllers: [api_controller_1.ApiController],
+        controllers: [api_controller_1.ApiController, node_controller_1.NodeController, portal_controller_1.PortalController],
         providers: [node_service_1.NodeService],
     })
 ], ManagerModule);
