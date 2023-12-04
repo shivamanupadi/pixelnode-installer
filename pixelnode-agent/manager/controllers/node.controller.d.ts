@@ -2,8 +2,8 @@ import { AlgodParams, NodeStatus, NodeVariant } from "../models/types";
 import { Request } from "express";
 import { NodeService } from "../services/node.service";
 import { Dockerstats } from "dockerstats";
-import DockerContainerStatsData = Dockerstats.DockerContainerStatsData;
 import { KeysStorageService } from "../../storage/services/keys.storage.service";
+import DockerContainerStatsData = Dockerstats.DockerContainerStatsData;
 export declare const Scopes: (...scopes: string[]) => import("@nestjs/common").CustomDecorator<string>;
 export declare class NodeController {
     private nodeService;
@@ -15,6 +15,8 @@ export declare class NodeController {
     restart(): Promise<boolean>;
     catchup(): Promise<void>;
     participationKeys(body: any): Promise<string>;
+    setMetrics(body: any): Promise<boolean>;
+    getMetrics(): Promise<boolean>;
     getNodeVariants(): NodeVariant[];
     algod(req: Request): Promise<AlgodParams>;
     status(req: Request): Promise<NodeStatus>;
