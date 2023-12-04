@@ -17,14 +17,12 @@ const common_1 = require("@nestjs/common");
 const auth_gaurd_1 = require("../../auth/services/auth.gaurd");
 const path_1 = __importDefault(require("path"));
 const auth_service_1 = require("../../auth/services/auth.service");
-const node_service_1 = require("../services/node.service");
 const child_process_1 = __importDefault(require("child_process"));
 const Scopes = (...scopes) => (0, common_1.SetMetadata)("scopes", scopes);
 exports.Scopes = Scopes;
 let PortalController = class PortalController {
-    constructor(authService, nodeService) {
+    constructor(authService) {
         this.authService = authService;
-        this.nodeService = nodeService;
     }
     async setup() {
         let setupCompleted = false;
@@ -92,7 +90,6 @@ __decorate([
 ], PortalController.prototype, "restart", null);
 exports.PortalController = PortalController = __decorate([
     (0, common_1.Controller)("api/portal"),
-    __metadata("design:paramtypes", [auth_service_1.AuthService,
-        node_service_1.NodeService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], PortalController);
 //# sourceMappingURL=portal.controller.js.map

@@ -13,6 +13,11 @@ services:
     volumes:
       - ${PWD}/data:/algod/data/:rw
       - ${PWD}/config.json:/etc/algorand/config.json:rw
+    networks:
+      - app-net
 networks:
   host:
     external: true
+  app-net:
+    driver: bridge
+
