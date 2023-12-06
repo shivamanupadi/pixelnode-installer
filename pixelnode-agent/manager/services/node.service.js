@@ -76,6 +76,13 @@ let NodeService = class NodeService {
                 containerId: "algorand-betanet",
                 catchup: "https://algorand-catchpoints.s3.us-east-2.amazonaws.com/channel/betanet/latest.catchpoint",
             },
+            {
+                id: "voi_testnet",
+                name: "Voi testnet",
+                dockerComposeFile: "docker-compose.voi.testnet.yml",
+                containerId: "voi-testnet",
+                catchup: "https://testnet-api.voi.nodly.io/v2/status",
+            },
         ];
     }
     getNodeVariant(id) {
