@@ -18,11 +18,19 @@ const auth_gaurd_1 = require("../../auth/services/auth.gaurd");
 const path_1 = __importDefault(require("path"));
 const auth_service_1 = require("../../auth/services/auth.service");
 const child_process_1 = __importDefault(require("child_process"));
+const shelljs_1 = __importDefault(require("shelljs"));
+const constants_1 = require("../../constants");
+const node_service_1 = require("../services/node.service");
+const keys_storage_service_1 = require("../../storage/services/keys.storage.service");
+const users_storage_service_1 = require("../../storage/services/users.storage.service");
 const Scopes = (...scopes) => (0, common_1.SetMetadata)("scopes", scopes);
 exports.Scopes = Scopes;
 let PortalController = class PortalController {
-    constructor(authService) {
+    constructor(authService, nodeService, keysStorageService, usersStorageService) {
         this.authService = authService;
+        this.nodeService = nodeService;
+        this.keysStorageService = keysStorageService;
+        this.usersStorageService = usersStorageService;
     }
     async setup() {
         let setupCompleted = false;
@@ -51,6 +59,21 @@ let PortalController = class PortalController {
         catch (e) {
             throw new common_1.HttpException("unable to restart the portal", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    async uninstall() {
+        const isInstalled = await this.nodeService.isInstalled();
+        if (isInstalled) {
+            const variant = await this.nodeService.getInstalledNodeVariant();
+            const command = `docker-compose -f ${variant.dockerComposeFile} down -v`;
+            shelljs_1.default.exec(command);
+            const dataPath = path_1.default.resolve("./data");
+            const configPath = path_1.default.resolve("./config.json");
+            const deleteCommand = `rm -r ${dataPath} ${configPath}`;
+            shelljs_1.default.exec(deleteCommand);
+            await this.keysStorageService.delete(constants_1.KEYS_STORAGE.NODE_VARIANT);
+        }
+        await this.usersStorageService.deleteAll();
+        return true;
     }
     async execCommand(command) {
         return new Promise((resolve, reject) => {
@@ -88,8 +111,19 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], PortalController.prototype, "restart", null);
+__decorate([
+    (0, common_1.Post)("factory-reset"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], PortalController.prototype, "uninstall", null);
 exports.PortalController = PortalController = __decorate([
     (0, common_1.Controller)("api/portal"),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService,
+        node_service_1.NodeService,
+        keys_storage_service_1.KeysStorageService,
+        users_storage_service_1.UsersStorageService])
 ], PortalController);
 //# sourceMappingURL=portal.controller.js.map

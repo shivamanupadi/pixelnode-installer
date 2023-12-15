@@ -83,16 +83,6 @@ let NodeController = class NodeController {
             throw new common_1.HttpException("unable to initiate the fast catchup", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async participationKeys(body) {
-        try {
-            const variant = await this.nodeService.getInstalledNodeVariant();
-            const { address, firstRound, lastRound } = body;
-            return shelljs_1.default.exec(`docker exec ${variant.containerId} goal account addpartkey -a ${address} --roundFirstValid=${firstRound} --roundLastValid=${lastRound}`);
-        }
-        catch (e) {
-            throw new common_1.HttpException("unable to generate the participation key", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
     async setMetrics(body) {
         const { status } = body;
         if (!status) {
@@ -222,7 +212,7 @@ let NodeController = class NodeController {
         try {
             const variant = await this.nodeService.getInstalledNodeVariant();
             const { dockerComposeFile } = variant;
-            const command = `docker-compose -f ${dockerComposeFile} pull && docker-compose -f ${dockerComposeFile} restart`;
+            const command = `docker-compose -f ${dockerComposeFile} down -v && docker-compose -f ${dockerComposeFile} pull && docker-compose -f ${dockerComposeFile} up -d`;
             shelljs_1.default.exec(command);
             return true;
         }
@@ -289,15 +279,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], NodeController.prototype, "catchup", null);
-__decorate([
-    (0, common_1.Post)("participation-keys"),
-    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
-    (0, exports.Scopes)("api"),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], NodeController.prototype, "participationKeys", null);
 __decorate([
     (0, common_1.Post)("metrics"),
     (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),

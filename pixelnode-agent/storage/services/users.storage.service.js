@@ -30,6 +30,9 @@ let UsersStorageService = class UsersStorageService {
     async save(username, password) {
         return await this.usersRepository.save({ username, password });
     }
+    async deleteAll() {
+        return await this.usersRepository.delete({});
+    }
 };
 exports.UsersStorageService = UsersStorageService;
 exports.UsersStorageService = UsersStorageService = __decorate([

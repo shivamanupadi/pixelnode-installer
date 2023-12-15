@@ -1,19 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.be7d7de4.css",
-    "main.js": "/static/js/main.3247e47c.js",
-    "static/media/Poppins-Thin.ttf": "/static/media/Poppins-Thin.a61eaf4c2e4d44d6db6a.ttf",
-    "static/media/Poppins-Light.ttf": "/static/media/Poppins-Light.f41b63c0bb0963ace821.ttf",
-    "static/media/Poppins-Regular.ttf": "/static/media/Poppins-Regular.8081832fc5cfbf634aa6.ttf",
-    "static/media/Poppins-Bold.ttf": "/static/media/Poppins-Bold.404e299be26d78e66794.ttf",
+    "main.css": "/static/css/main.ff3338c1.css",
+    "main.js": "/static/js/main.8ccb5769.js",
+    "static/media/loader.gif": "/static/media/loader.95e985cb44d46d6b0e66.gif",
+    "static/media/Rubik-Bold.ttf": "/static/media/Rubik-Bold.c934eb22c2c69992b34c.ttf",
+    "static/media/Rubik-Regular.ttf": "/static/media/Rubik-Regular.55fa11cdc8b9a3ee842f.ttf",
+    "static/media/Rubik-Light.ttf": "/static/media/Rubik-Light.9d2ccd264dc61b954019.ttf",
     "static/media/voi-logo.png": "/static/media/voi-logo.d025513c3edcf385af10.png",
     "static/media/algo-logo.png": "/static/media/algo-logo.733793272aeaf0eb2200.png",
-    "static/media/logo.png": "/static/media/logo.70691561f3bcce029563.png",
     "static/media/block.png": "/static/media/block.fd22b69d7e66854a6707.png",
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.be7d7de4.css",
-    "static/js/main.3247e47c.js"
+    "static/css/main.ff3338c1.css",
+    "static/js/main.8ccb5769.js"
   ]
 }

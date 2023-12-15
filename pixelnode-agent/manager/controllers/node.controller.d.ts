@@ -14,7 +14,6 @@ export declare class NodeController {
     }): Promise<boolean>;
     restart(): Promise<boolean>;
     catchup(): Promise<void>;
-    participationKeys(body: any): Promise<string>;
     setMetrics(body: any): Promise<boolean>;
     getMetrics(): Promise<boolean>;
     getNodeVariants(): NodeVariant[];
