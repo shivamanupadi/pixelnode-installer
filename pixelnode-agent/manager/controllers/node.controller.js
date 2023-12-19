@@ -110,7 +110,49 @@ let NodeController = class NodeController {
             return false;
         }
         catch (e) {
-            throw new common_1.HttpException("unable to set metrics", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new common_1.HttpException("unable to get metrics", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getTelemetry() {
+        try {
+            const variant = await this.nodeService.getInstalledNodeVariant();
+            const str = shelljs_1.default.exec(`docker exec ${variant.containerId} diagcfg telemetry status`);
+            if (str) {
+                return str.includes("enabled");
+            }
+            return false;
+        }
+        catch (e) {
+            throw new common_1.HttpException("unable to get telemetry status", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getTelemetryGuid() {
+        try {
+            const str = fs_extra_1.default
+                .readFileSync(path_1.default.resolve("./data/logging.config"))
+                .toString();
+            const loggingConfig = JSON.parse(str);
+            return loggingConfig?.GUID || "";
+        }
+        catch (e) {
+            throw new common_1.HttpException("unable to get telemetry guid", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async setTelemetry(body) {
+        const { status } = body;
+        if (!status) {
+            throw new common_1.HttpException("invalid configuration", common_1.HttpStatus.BAD_REQUEST);
+        }
+        if (status !== "enable" && status !== "disable") {
+            throw new common_1.HttpException("invalid configuration", common_1.HttpStatus.BAD_REQUEST);
+        }
+        try {
+            const variant = await this.nodeService.getInstalledNodeVariant();
+            shelljs_1.default.exec(`docker exec ${variant.containerId} diagcfg telemetry ${status}`);
+            return true;
+        }
+        catch (e) {
+            throw new common_1.HttpException("unable to set telemetry", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     getNodeVariants() {
@@ -296,6 +338,31 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], NodeController.prototype, "getMetrics", null);
+__decorate([
+    (0, common_1.Get)("telemetry"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], NodeController.prototype, "getTelemetry", null);
+__decorate([
+    (0, common_1.Get)("telemetry-guid"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], NodeController.prototype, "getTelemetryGuid", null);
+__decorate([
+    (0, common_1.Post)("telemetry"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], NodeController.prototype, "setTelemetry", null);
 __decorate([
     (0, common_1.Get)("variants"),
     (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),

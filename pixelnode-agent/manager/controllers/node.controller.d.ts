@@ -16,6 +16,9 @@ export declare class NodeController {
     catchup(): Promise<void>;
     setMetrics(body: any): Promise<boolean>;
     getMetrics(): Promise<boolean>;
+    getTelemetry(): Promise<boolean>;
+    getTelemetryGuid(): Promise<string>;
+    setTelemetry(body: any): Promise<boolean>;
     getNodeVariants(): NodeVariant[];
     algod(req: Request): Promise<AlgodParams>;
     status(req: Request): Promise<NodeStatus>;
