@@ -17,7 +17,7 @@ export declare class NodeController {
     setMetrics(body: any): Promise<boolean>;
     getMetrics(): Promise<boolean>;
     getTelemetry(): Promise<boolean>;
-    getTelemetryGuid(): Promise<string>;
+    getTelemetryConfig(): Promise<any>;
     setTelemetry(body: any): Promise<boolean>;
     getNodeVariants(): NodeVariant[];
     algod(req: Request): Promise<AlgodParams>;
