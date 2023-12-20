@@ -1,4 +1,4 @@
-import { AlgodParams, NodeStatus, NodeVariant } from "../models/types";
+import { AlgodParams, NodeStatus, NodeVariant, TelemetryConfig } from "../models/types";
 import { Request } from "express";
 import { NodeService } from "../services/node.service";
 import { Dockerstats } from "dockerstats";
@@ -17,7 +17,7 @@ export declare class NodeController {
     setMetrics(body: any): Promise<boolean>;
     getMetrics(): Promise<boolean>;
     getTelemetry(): Promise<boolean>;
-    getTelemetryConfig(): Promise<any>;
+    getTelemetryConfig(): Promise<TelemetryConfig>;
     setTelemetry(body: any): Promise<boolean>;
     getNodeVariants(): NodeVariant[];
     algod(req: Request): Promise<AlgodParams>;

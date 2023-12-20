@@ -134,7 +134,7 @@ let NodeController = class NodeController {
             const loggingConfig = JSON.parse(str);
             return {
                 guid: loggingConfig?.GUID || "",
-                name: loggingConfig?.name || "",
+                name: loggingConfig?.Name || "",
             };
         }
         catch (e) {

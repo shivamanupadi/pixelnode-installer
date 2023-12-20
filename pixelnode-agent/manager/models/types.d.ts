@@ -60,3 +60,7 @@ export interface NodeVariant {
     catchup: string;
     containerId: string;
 }
+export interface TelemetryConfig {
+    guid: string;
+    name: string;
+}
