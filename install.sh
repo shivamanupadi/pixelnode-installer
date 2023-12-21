@@ -26,7 +26,7 @@ function npm_install_if_not_installed() {
         echo "$1 is already installed. Skipping..."
     else
         echo "Installing $1 using npm..."
-        npm install -g "$1"
+        sudo npm install -g "$1"
     fi
 }
 
