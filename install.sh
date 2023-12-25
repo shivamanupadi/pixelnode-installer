@@ -146,6 +146,12 @@ function clone_git_repo_if_not_cloned() {
     fi
 }
 
+echo -e "-------------"
+echo -e "Welcome to pixelnode beta installer!"
+echo -e "This script will install everything for you."
+echo -e "-------------"
+echo "Installing required packages..."
+
 # Setup needrestart configurations (Linux only)
 setup_needrestart_config
 
@@ -177,5 +183,5 @@ docker-compose -f docker-compose.algorand.mainnet.yml pull
 docker-compose -f docker-compose.algorand.testnet.yml pull
 docker-compose -f docker-compose.algorand.betanet.yml pull
 
-echo -e "\033[32mPixelNode installed successfully. Running on PORT 8000. Open your server in the browser on the port 8000\033[0m"
-
+echo -e "\nCongratulations! Your pixelnode instance is ready to use.\n"
+echo "Please visit http://$(curl -4s https://ifconfig.io):8000 to get started."
