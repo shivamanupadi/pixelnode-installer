@@ -19,13 +19,11 @@ export declare class NodeController {
     getTelemetry(): Promise<boolean>;
     getTelemetryConfig(): Promise<TelemetryConfig>;
     setTelemetry(body: any): Promise<boolean>;
+    setTelemetryName(body: any): Promise<boolean>;
     getNodeVariants(): NodeVariant[];
     algod(req: Request): Promise<AlgodParams>;
     status(req: Request): Promise<NodeStatus>;
     nodeStats(): Promise<DockerContainerStatsData>;
     uninstall(): Promise<boolean>;
     updateNode(): Promise<boolean>;
-    updatePortal(): Promise<boolean>;
-    restartPortal(): Promise<boolean>;
-    execCommand(command: string): Promise<unknown>;
 }

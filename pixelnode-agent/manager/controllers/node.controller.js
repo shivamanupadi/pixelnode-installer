@@ -26,7 +26,6 @@ const node_service_1 = require("../services/node.service");
 const dockerstats_1 = require("dockerstats");
 const algosdk_1 = require("algosdk");
 const keys_storage_service_1 = require("../../storage/services/keys.storage.service");
-const child_process_1 = __importDefault(require("child_process"));
 const Scopes = (...scopes) => (0, common_1.SetMetadata)("scopes", scopes);
 exports.Scopes = Scopes;
 let NodeController = class NodeController {
@@ -158,6 +157,23 @@ let NodeController = class NodeController {
             throw new common_1.HttpException("unable to set telemetry", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async setTelemetryName(body) {
+        const { name } = body;
+        if (!name) {
+            throw new common_1.HttpException("invalid name", common_1.HttpStatus.BAD_REQUEST);
+        }
+        try {
+            const variant = await this.nodeService.getInstalledNodeVariant();
+            const isEnabled = await this.getTelemetry();
+            const status = isEnabled ? "enable" : "disable";
+            shelljs_1.default.exec(`docker exec ${variant.containerId} diagcfg telemetry name -n ${name}`);
+            shelljs_1.default.exec(`docker exec ${variant.containerId} diagcfg telemetry ${status}`);
+            return true;
+        }
+        catch (e) {
+            throw new common_1.HttpException("unable to set telemetry name", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     getNodeVariants() {
         return this.nodeService.getNodeVariants();
     }
@@ -265,38 +281,6 @@ let NodeController = class NodeController {
             throw new common_1.HttpException("unable to update the node", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async updatePortal() {
-        try {
-            const scriptPath = path_1.default.resolve("update.sh");
-            await this.execCommand(`sh ${scriptPath}`);
-            return true;
-        }
-        catch (e) {
-            throw new common_1.HttpException("unable to update the portal", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    async restartPortal() {
-        try {
-            const scriptPath = path_1.default.resolve("restart.sh");
-            await this.execCommand(`sh ${scriptPath}`);
-            return true;
-        }
-        catch (e) {
-            throw new common_1.HttpException("unable to restart the portal", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    async execCommand(command) {
-        return new Promise((resolve, reject) => {
-            child_process_1.default.exec(command, (error, stdout, stderr) => {
-                if (error) {
-                    reject(stderr);
-                }
-                else {
-                    resolve(stdout);
-                }
-            });
-        });
-    }
 };
 exports.NodeController = NodeController;
 __decorate([
@@ -367,6 +351,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], NodeController.prototype, "setTelemetry", null);
 __decorate([
+    (0, common_1.Post)("telemetry-name"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], NodeController.prototype, "setTelemetryName", null);
+__decorate([
     (0, common_1.Get)("variants"),
     (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
     (0, exports.Scopes)("api"),
@@ -414,22 +407,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], NodeController.prototype, "updateNode", null);
-__decorate([
-    (0, common_1.Post)("update-portal"),
-    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
-    (0, exports.Scopes)("api"),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], NodeController.prototype, "updatePortal", null);
-__decorate([
-    (0, common_1.Post)("restart-portal"),
-    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
-    (0, exports.Scopes)("api"),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], NodeController.prototype, "restartPortal", null);
 exports.NodeController = NodeController = __decorate([
     (0, common_1.Controller)("api/node"),
     __metadata("design:paramtypes", [node_service_1.NodeService,
