@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2baafa31.css",
+    "main.js": "/static/js/main.813e9ad8.js",
+    "static/media/loader.gif": "/static/media/loader.d9bfdf3a408f026a6c97.gif",
+    "static/media/Rubik-Bold.ttf": "/static/media/Rubik-Bold.c934eb22c2c69992b34c.ttf",
+    "static/media/Rubik-Regular.ttf": "/static/media/Rubik-Regular.55fa11cdc8b9a3ee842f.ttf",
+    "static/media/Rubik-Light.ttf": "/static/media/Rubik-Light.9d2ccd264dc61b954019.ttf",
+    "static/media/voi-logo.png": "/static/media/voi-logo.d025513c3edcf385af10.png",
+    "static/media/algo-logo.png": "/static/media/algo-logo.733793272aeaf0eb2200.png",
+    "static/media/block.png": "/static/media/block.fd22b69d7e66854a6707.png",
+    "index.html": "/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.2baafa31.css",
+    "static/js/main.813e9ad8.js"
+  ]
+}
