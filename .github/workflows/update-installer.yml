@@ -29,6 +29,7 @@ jobs:
           rm -rf ./prometheus
           mv ./pixelnode/prometheus .
           mv ./pixelnode/package.json package.json
+          mv ./pixelnode/yarn.lock yarn.lock
 
       - name: Commit and push changes
         run: |
