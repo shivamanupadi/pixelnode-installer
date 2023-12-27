@@ -20,12 +20,15 @@ const cache_manager_1 = require("@nestjs/cache-manager");
 const path_1 = __importDefault(require("path"));
 const serve_static_1 = require("@nestjs/serve-static");
 const users_entity_1 = require("./storage/entities/users.entity");
+const configuration_1 = __importDefault(require("./config/configuration"));
+const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            config_1.ConfigModule.forRoot({ isGlobal: true, load: [configuration_1.default] }),
             serve_static_1.ServeStaticModule.forRoot({
                 rootPath: path_1.default.join(__dirname, "web"),
                 exclude: ["/api/(.*)", "/auth/(.*)"],

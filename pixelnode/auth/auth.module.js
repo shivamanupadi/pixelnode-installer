@@ -12,11 +12,9 @@ const auth_controller_1 = require("./controllers/auth.controller");
 const auth_service_1 = require("./services/auth.service");
 const storage_module_1 = require("../storage/storage.module");
 const jwt_1 = require("@nestjs/jwt");
-const keys_storage_service_1 = require("../storage/services/keys.storage.service");
-const crypto_1 = require("crypto");
 const auth_gaurd_1 = require("./services/auth.gaurd");
 const core_1 = require("@nestjs/core");
-const constants_1 = require("../constants");
+const config_1 = require("@nestjs/config");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -24,19 +22,12 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             storage_module_1.StorageModule,
+            config_1.ConfigModule,
             jwt_1.JwtModule.registerAsync({
-                imports: [storage_module_1.StorageModule],
-                inject: [keys_storage_service_1.KeysStorageService],
-                useFactory: async (keysStorageService) => {
-                    const secret = await keysStorageService.find("jwt_secret");
-                    let jwtSecret = "";
-                    if (secret) {
-                        jwtSecret = secret.value;
-                    }
-                    else {
-                        jwtSecret = (0, crypto_1.randomBytes)(64).toString("hex");
-                        await keysStorageService.save(constants_1.KEYS_STORAGE.JWT_SECRET, jwtSecret);
-                    }
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: async (configService) => {
+                    const jwtSecret = configService.get("JWT_SECRET");
                     return {
                         secret: jwtSecret,
                         signOptions: {
