@@ -177,11 +177,13 @@ cd pixelnode-installer
 git reset --hard origin/master
 git pull
 yarn install
+
+bash createEnv.sh
 PORT=8000 pm2 start ecosystem.config.js
 
 docker-compose -f docker-compose.algorand.mainnet.yml pull
 docker-compose -f docker-compose.algorand.testnet.yml pull
 docker-compose -f docker-compose.algorand.betanet.yml pull
 
-echo -e "\nCongratulations! Your pixelnode instance is ready to use.\n"
-echo "Please visit http://$(curl -4s https://ifconfig.io):8000 to get started."
+echo -e "\033[32m\nCongratulations! Your pixelnode instance is ready to use.\n\033[0m"
+echo "\033[32mPlease visit http://$(curl -4s https://ifconfig.io):8000 to get started.\033[0m"
