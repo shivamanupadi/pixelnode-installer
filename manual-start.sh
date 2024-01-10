@@ -1,0 +1,1 @@
+PORT=8000 pm2 start ecosystem.config.js
