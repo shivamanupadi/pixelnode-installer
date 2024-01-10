@@ -267,8 +267,7 @@ let NodeController = class NodeController {
         const command = `docker-compose -f ${variant.dockerComposeFile} down -v`;
         shelljs_1.default.exec(command);
         const dataPath = path_1.default.resolve("./data");
-        const configPath = path_1.default.resolve("./config.json");
-        const deleteCommand = `rm -r ${dataPath} ${configPath}`;
+        const deleteCommand = `rm -r ${dataPath}`;
         shelljs_1.default.exec(deleteCommand);
         await this.keysStorageService.delete(constants_1.KEYS_STORAGE.NODE_VARIANT);
         return true;

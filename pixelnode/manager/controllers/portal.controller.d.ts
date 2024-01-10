@@ -12,6 +12,6 @@ export declare class PortalController {
     setup(): Promise<boolean>;
     update(): Promise<boolean>;
     restart(): Promise<boolean>;
-    uninstall(): Promise<boolean>;
+    factoryReset(): Promise<boolean>;
     execCommand(command: string): Promise<unknown>;
 }

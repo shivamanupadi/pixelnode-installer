@@ -61,15 +61,14 @@ let PortalController = class PortalController {
             throw new common_1.HttpException("unable to restart the portal", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async uninstall() {
+    async factoryReset() {
         const isInstalled = await this.nodeService.isInstalled();
         if (isInstalled) {
             const variant = await this.nodeService.getInstalledNodeVariant();
             const command = `docker-compose -f ${variant.dockerComposeFile} down -v`;
             shelljs_1.default.exec(command);
             const dataPath = path_1.default.resolve("./data");
-            const configPath = path_1.default.resolve("./config.json");
-            const deleteCommand = `rm -r ${dataPath} ${configPath}`;
+            const deleteCommand = `rm -r ${dataPath}`;
             shelljs_1.default.exec(deleteCommand);
             await this.keysStorageService.delete(constants_1.KEYS_STORAGE.NODE_VARIANT);
         }
@@ -119,7 +118,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], PortalController.prototype, "uninstall", null);
+], PortalController.prototype, "factoryReset", null);
 exports.PortalController = PortalController = __decorate([
     (0, common_1.Controller)("api/portal"),
     __metadata("design:paramtypes", [auth_service_1.AuthService,

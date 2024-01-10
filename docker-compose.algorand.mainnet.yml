@@ -12,7 +12,6 @@ services:
       - PROFILE=participation
     volumes:
       - ${PWD}/data:/algod/data/:rw
-      - ${PWD}/config.json:/etc/algorand/config.json:rw
     networks:
       - app-net
   prometheus:

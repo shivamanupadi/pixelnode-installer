@@ -3,16 +3,13 @@ version: '3'
 services:
   algod:
     container_name: voi-testnet
-    image: scholtz2/algorand-participation-voitest-extended:3.20.1-stable
+    image: ghcr.io/voinetwork/docker-participation-node:latest
     ports:
-      - 4190:28081
+      - 4190:8080
     environment:
       - NETWORK=voitest
-      - FAST_CATCHUP=1
-      - PROFILE=participation
     volumes:
-      - ${PWD}/data:/app/data/:rw
-      - ${PWD}/config.json:/etc/algorand/config.json:rw
+      - ${PWD}/data:/algod/data/:rw
     networks:
       - app-net
   prometheus:
