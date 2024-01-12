@@ -1,6 +1,6 @@
 git reset --hard origin/master
 git pull
-yarn install
+yarn install --ignore-engines
 
 bash createEnv.sh
 pm2 restart pixelnode

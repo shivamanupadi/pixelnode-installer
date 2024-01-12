@@ -1,7 +1,7 @@
 pm2 delete pixelnode
 git reset --hard origin/master
 git pull
-yarn install
+yarn install --ignore-engines
 
 bash createEnv.sh
 PORT=8000 pm2 start ecosystem.config.js
