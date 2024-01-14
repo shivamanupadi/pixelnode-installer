@@ -14,8 +14,6 @@
     "copy-docker-images": "copyDockerImages() { for file in algorand.mainnet algorand.testnet algorand.betanet voi.testnet; do ncp ./docker-compose.$file.yml ./dist/docker-compose.$file.yml; done }; copyDockerImages"
   },
   "dependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
     "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
