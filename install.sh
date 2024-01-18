@@ -175,6 +175,7 @@ npm_install_if_not_installed yarn
 clone_git_repo_if_not_cloned
 cd pixelnode-installer
 git reset --hard origin/master
+git stash
 git pull
 yarn install --ignore-engines
 

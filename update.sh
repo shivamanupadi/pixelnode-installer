@@ -1,4 +1,5 @@
 git reset --hard origin/master
+git stash
 git pull
 yarn install --ignore-engines
 
