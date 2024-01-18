@@ -179,6 +179,7 @@ git pull
 yarn install --ignore-engines
 
 bash createEnv.sh
+bash createDockerEnv.sh
 PORT=8000 pm2 start ecosystem.config.js
 
 docker-compose -f docker-compose.algorand.mainnet.yml pull

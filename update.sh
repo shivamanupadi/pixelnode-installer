@@ -3,6 +3,7 @@ git pull
 yarn install --ignore-engines
 
 bash createEnv.sh
+bash createDockerEnv.sh
 pm2 restart pixelnode
 
 echo -e "\033[32mPixelNode upgraded successfully. Running on PORT 8000. Open your server in the browser on the port 8000\033[0m"
