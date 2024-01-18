@@ -26,6 +26,7 @@ const node_service_1 = require("../services/node.service");
 const dockerstats_1 = require("dockerstats");
 const algosdk_1 = require("algosdk");
 const keys_storage_service_1 = require("../../storage/services/keys.storage.service");
+const newline_remove_1 = __importDefault(require("newline-remove"));
 const Scopes = (...scopes) => (0, common_1.SetMetadata)("scopes", scopes);
 exports.Scopes = Scopes;
 let NodeController = class NodeController {
@@ -63,8 +64,9 @@ let NodeController = class NodeController {
         }
         try {
             const dockerComposeFile = await this.nodeService.getNodeDockerComposeFile();
-            const command = `docker-compose -f ${dockerComposeFile} restart`;
+            const command = `docker-compose -f ${dockerComposeFile} down && docker-compose -f ${dockerComposeFile} up -d`;
             shelljs_1.default.exec(command);
+            await this.catchup();
             return true;
         }
         catch (e) {
@@ -276,12 +278,36 @@ let NodeController = class NodeController {
         try {
             const variant = await this.nodeService.getInstalledNodeVariant();
             const { dockerComposeFile } = variant;
-            const command = `docker-compose -f ${dockerComposeFile} down -v && docker-compose -f ${dockerComposeFile} pull && docker-compose -f ${dockerComposeFile} up -d`;
+            const command = `docker-compose -f ${dockerComposeFile} down && docker-compose -f ${dockerComposeFile} pull && docker-compose -f ${dockerComposeFile} up -d`;
             shelljs_1.default.exec(command);
             return true;
         }
         catch (e) {
             throw new common_1.HttpException("unable to update the node", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getNodeEnv() {
+        try {
+            const result = {
+                GOGC: "",
+                GOMEMLIMIT: "",
+            };
+            const variant = await this.nodeService.getInstalledNodeVariant();
+            const { containerId } = variant;
+            const command1 = `docker exec ${containerId} sh -c 'echo $GOGC'`;
+            const { stdout: stdout1 } = shelljs_1.default.exec(command1);
+            const command2 = `docker exec ${containerId} sh -c 'echo $GOMEMLIMIT'`;
+            const { stdout: stdout2 } = shelljs_1.default.exec(command2);
+            if (stdout1) {
+                result.GOGC = (0, newline_remove_1.default)(stdout1);
+            }
+            if (stdout2) {
+                result.GOMEMLIMIT = (0, newline_remove_1.default)(stdout2);
+            }
+            return result;
+        }
+        catch (e) {
+            throw new common_1.HttpException("unable to get node env", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 };
@@ -410,6 +436,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], NodeController.prototype, "updateNode", null);
+__decorate([
+    (0, common_1.Get)("env"),
+    (0, common_1.UseGuards)(auth_gaurd_1.AuthGuard),
+    (0, exports.Scopes)("api"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], NodeController.prototype, "getNodeEnv", null);
 exports.NodeController = NodeController = __decorate([
     (0, common_1.Controller)("api/node"),
     __metadata("design:paramtypes", [node_service_1.NodeService,

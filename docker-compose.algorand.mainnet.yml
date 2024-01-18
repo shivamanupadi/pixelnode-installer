@@ -6,6 +6,8 @@ services:
     image: algorand/algod:latest
     ports:
       - 4190:8080
+    env_file:
+      - docker.env
     environment:
       - NETWORK=mainnet
       - FAST_CATCHUP=1

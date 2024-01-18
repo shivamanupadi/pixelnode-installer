@@ -1,4 +1,4 @@
-import { AlgodParams, NodeStatus, NodeVariant, TelemetryConfig } from "../models/types";
+import { AlgodParams, NodeEnv, NodeStatus, NodeVariant, TelemetryConfig } from "../models/types";
 import { Request } from "express";
 import { NodeService } from "../services/node.service";
 import { Dockerstats } from "dockerstats";
@@ -26,4 +26,5 @@ export declare class NodeController {
     nodeStats(): Promise<DockerContainerStatsData>;
     uninstall(): Promise<boolean>;
     updateNode(): Promise<boolean>;
+    getNodeEnv(): Promise<NodeEnv>;
 }

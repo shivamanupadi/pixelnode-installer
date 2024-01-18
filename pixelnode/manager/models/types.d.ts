@@ -64,3 +64,7 @@ export interface TelemetryConfig {
     guid: string;
     name: string;
 }
+export interface NodeEnv {
+    GOGC: string;
+    GOMEMLIMIT: string;
+}
