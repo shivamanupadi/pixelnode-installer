@@ -15,14 +15,22 @@ const jwt_1 = require("@nestjs/jwt");
 const node_service_1 = require("./services/node.service");
 const node_controller_1 = require("./controllers/node.controller");
 const portal_controller_1 = require("./controllers/portal.controller");
+const dmesg_service_1 = require("./services/dmesg.service");
+const logs_controller_1 = require("./controllers/logs.controller");
+const pm2_service_1 = require("./services/pm2.service");
 let ManagerModule = class ManagerModule {
 };
 exports.ManagerModule = ManagerModule;
 exports.ManagerModule = ManagerModule = __decorate([
     (0, common_1.Module)({
         imports: [storage_module_1.StorageModule, auth_module_1.AuthModule, jwt_1.JwtModule],
-        controllers: [api_controller_1.ApiController, node_controller_1.NodeController, portal_controller_1.PortalController],
-        providers: [node_service_1.NodeService],
+        controllers: [
+            api_controller_1.ApiController,
+            node_controller_1.NodeController,
+            portal_controller_1.PortalController,
+            logs_controller_1.LogsController,
+        ],
+        providers: [node_service_1.NodeService, dmesg_service_1.DmesgService, pm2_service_1.Pm2Service],
     })
 ], ManagerModule);
 //# sourceMappingURL=manager.module.js.map
