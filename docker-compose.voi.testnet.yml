@@ -14,6 +14,8 @@ services:
       - ${PWD}/data:/algod/data/:rw
     networks:
       - app-net
+    logging:
+      driver: "local"
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -25,6 +27,8 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
     networks:
       - app-net
+    logging:
+      driver: "local"
     depends_on:
       - algod
   grafana:
@@ -36,6 +40,8 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
       - app-net
+    logging:
+      driver: "local"
     depends_on:
       - prometheus
 networks:
