@@ -65,7 +65,7 @@ let PortalController = class PortalController {
         const isInstalled = await this.nodeService.isInstalled();
         if (isInstalled) {
             const variant = await this.nodeService.getInstalledNodeVariant();
-            const command = `docker-compose -f ${variant.dockerComposeFile} down -v`;
+            const command = `docker compose -f ${variant.dockerComposeFile} down -v`;
             shelljs_1.default.exec(command);
             const dataPath = path_1.default.resolve("./data");
             const deleteCommand = `rm -r ${dataPath}`;

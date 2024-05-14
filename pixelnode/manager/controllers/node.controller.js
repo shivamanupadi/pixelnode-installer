@@ -48,7 +48,7 @@ let NodeController = class NodeController {
         }
         try {
             const dockerComposeFile = this.nodeService.getDockerComposeFileByNodeVariant(nodeVariantId);
-            const command = `docker-compose -f ${dockerComposeFile} up -d`;
+            const command = `docker compose -f ${dockerComposeFile} up -d`;
             shelljs_1.default.exec(command);
             await this.nodeService.setNodeVariant(nodeVariantId);
             return true;
@@ -64,7 +64,7 @@ let NodeController = class NodeController {
         }
         try {
             const dockerComposeFile = await this.nodeService.getNodeDockerComposeFile();
-            const command = `docker-compose -f ${dockerComposeFile} down && docker-compose -f ${dockerComposeFile} up -d`;
+            const command = `docker compose -f ${dockerComposeFile} down && docker compose -f ${dockerComposeFile} up -d`;
             shelljs_1.default.exec(command);
             await this.catchup();
             return true;
@@ -266,7 +266,7 @@ let NodeController = class NodeController {
             throw new common_1.HttpException("node is not installed", common_1.HttpStatus.BAD_REQUEST);
         }
         const variant = await this.nodeService.getInstalledNodeVariant();
-        const command = `docker-compose -f ${variant.dockerComposeFile} down -v`;
+        const command = `docker compose -f ${variant.dockerComposeFile} down -v`;
         shelljs_1.default.exec(command);
         const dataPath = path_1.default.resolve("./data");
         const deleteCommand = `rm -r ${dataPath}`;
@@ -278,7 +278,7 @@ let NodeController = class NodeController {
         try {
             const variant = await this.nodeService.getInstalledNodeVariant();
             const { dockerComposeFile } = variant;
-            const command = `docker-compose -f ${dockerComposeFile} down && docker-compose -f ${dockerComposeFile} pull && docker-compose -f ${dockerComposeFile} up -d`;
+            const command = `docker compose -f ${dockerComposeFile} down && docker compose -f ${dockerComposeFile} pull && docker compose -f ${dockerComposeFile} up -d`;
             shelljs_1.default.exec(command);
             return true;
         }
