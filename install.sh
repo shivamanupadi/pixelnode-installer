@@ -79,31 +79,6 @@ function install_docker_if_not_installed() {
     fi
 }
 
-# Function to install Docker Compose, only if it's not installed
-function install_docker_compose_if_not_installed() {
-    if is_command_available "docker-compose"; then
-        echo "Docker Compose is already installed. Skipping..."
-    else
-        echo "Installing Docker Compose..."
-        if [ "$(uname)" == "Darwin" ]; then
-            # macOS (brew)
-            brew install docker-compose
-        else
-            # Linux (apt-get on Debian/Ubuntu, yum on CentOS)
-            if [ -f /etc/debian_version ]; then
-                sudo apt-get update
-                sudo apt-get install --yes docker-compose
-            elif [ -f /etc/redhat-release ]; then
-                sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                sudo chmod +x /usr/local/bin/docker-compose
-            else
-                echo "Unsupported Linux distribution. Unable to install Docker."
-                exit 1
-            fi
-        fi
-    fi
-}
-
 
 # Function to install Node.js, only if it's not installed
 function install_nodejs_if_not_installed() {
@@ -161,9 +136,6 @@ install_git_if_not_installed
 # Install Docker
 install_docker_if_not_installed
 
-# Install Docker Compose
-install_docker_compose_if_not_installed
-
 # Install Node.js
 install_nodejs_if_not_installed
 
@@ -183,10 +155,10 @@ bash createEnv.sh
 bash createDockerEnv.sh
 PORT=8000 pm2 start ecosystem.config.js
 
-docker-compose -f docker-compose.algorand.mainnet.yml pull
-docker-compose -f docker-compose.algorand.testnet.yml pull
-docker-compose -f docker-compose.algorand.betanet.yml pull
-docker-compose -f docker-compose.voi.testnet.yml pull
+docker compose -f docker-compose.algorand.mainnet.yml pull
+docker compose -f docker-compose.algorand.testnet.yml pull
+docker compose -f docker-compose.algorand.betanet.yml pull
+docker compose -f docker-compose.voi.testnet.yml pull
 
 echo -e "\033[32m\nCongratulations! Your pixelnode instance is ready to use.\n\033[0m"
 echo -e "\033[32m\nPlease visit http://$(curl -4s https://ifconfig.io):8000 to get started.\n\033[0m"
