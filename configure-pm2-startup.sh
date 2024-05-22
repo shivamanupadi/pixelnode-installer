@@ -3,6 +3,17 @@
 pm2 save
 echo "Saved PM2 process list"
 
-PM2_START_UP_CMD=$(pm2 startup | tail -n 1)
-eval PM2_START_UP_CMD
-echo "Configured PM2 to start on system boot"
+setup_linux_pm2() {
+    pm2 startup
+    echo "Configured PM2 to start on system boot"
+}
+
+# Detect the OS and run the appropriate setup
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    setup_linux_pm2
+else
+    echo "Unsupported OS: $OSTYPE"
+    exit 1
+fi
+
+
